@@ -1,10 +1,13 @@
 package main
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 
 >>>>>>> 1470a3caefdb4f1eb4e5ad77633c95c535058e1d
+=======
+>>>>>>> a9ba2530d2d2ee4b9fd15080950f8c392477e34b
 func IsLetter2(r rune) bool {
 	lettermaj := ('A' <= r) && (r <= 'Z')
 	lettermin := ('a' <= r) && (r <= 'z')
@@ -40,7 +43,20 @@ func Capitalize(s string) string {
 	}
 	return string(str2)
 <<<<<<< HEAD
+<<<<<<< HEAD
 }
 =======
 }
 >>>>>>> 1470a3caefdb4f1eb4e5ad77633c95c535058e1d
+=======
+}
+
+func Contains(s string, char rune) bool { // Si une string est contenue dans un tableau
+	for _, a := range s {
+		if a == char {
+			return true
+		}
+	}
+	return false
+}
+>>>>>>> a9ba2530d2d2ee4b9fd15080950f8c392477e34b
