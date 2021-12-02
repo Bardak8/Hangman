@@ -7,6 +7,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"strings"
 )
 
 func Clear() {
@@ -95,8 +96,12 @@ func Readword3() {
 	fmt.Println(string(content))
 }
 
-func Guesstheword() {
+func wordToUnderscore(motChoisi string) string {
+    str2 := strings.ReplaceAll(motChoisi, "[a-zA-Z]", "_"); // remplace chaque lettre "_"
+	return str2
+}
 
-
-
-}  	
+func addLetter(hidden string) string {
+	var  string
+	for_, motChoisi := range 
+}
