@@ -100,14 +100,14 @@ func wordToUnderscore(motChoisi string) string {
 	return str2
 }
 
-func Guesstheword(hiddenword string, chosenletter rune, motChoisi) string{
+func Guesstheword(hiddenword string, motChoisi string) string{
 	INletter := bufio.NewScanner(os.Stdin)
 	INletter.Scan()
-	letter := Capitalize(INletter.Text())
-	hiddenword = motChoisi
+	letter := Capitalize(INletter.Text())	
+	hiddenword[i] = motChoisi[i]
 	for_, INletter := range motChoisi {
-		if motChoisi strings.Contains(INletter) {
-			hiddenword = []hiddenword += INletter += 
+		if Contains(motChoisi, INletter) {
+			strings.Replace()
 		} else {
 			return true
 		}

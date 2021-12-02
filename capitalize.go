@@ -1,7 +1,5 @@
 package main
 
-
-
 func IsLetter2(r rune) bool {
 	lettermaj := ('A' <= r) && (r <= 'Z')
 	lettermin := ('a' <= r) && (r <= 'z')
@@ -36,4 +34,13 @@ func Capitalize(s string) string {
 		}
 	}
 	return string(str2)
+}
+
+func Contains(s string, char rune) bool { // Si une string est contenue dans un tableau
+	for _, a := range s {
+		if a == char {
+			return true
+		}
+	}
+	return false
 }
