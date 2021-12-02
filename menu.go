@@ -22,6 +22,9 @@ func SlowPrint(str ...string) {
 		}
 	}
 }
+
+	
+
 func start() {
 	SlowPrint("Bonjour ")
 	fmt.Println("1 = Démarrer l'éxécution")
@@ -100,21 +103,28 @@ func wordToUnderscore(motChoisi string) string {
 	return str2
 }
 
-func Replace 
-
-func Guesstheword(hiddenword string, motChoisi []string) string{
+func replace(hiddenword string, motChoisi string) string {
+	var str2 string
 	INletter := bufio.NewScanner(os.Stdin)
-	INletter.Scan()
+	INletter.Scan() 
 	letter := Capitalize(INletter.Text())	
-	hiddenword[i] = motChoisi[i]
-	for_, INletter := range motChoisi {
-		if Contains(motChoisi, INletter) {
-			hiddenword := []rune(str[0])
-			s[2] = 'y'
-			str[0] = string(s)
-		} else {
-			return true
-		}
+	for findIndex(hiddenword, motChoisi) {
+
 	}
+}
+
+func findIndex(hiddenword string, motChoisi string) int {
+	
+	var lettre bool
+	for i, letter := range motChoisi {
+		lettre = Contains(motChoisi, rune(letter))
+		if lettre == false {
+			return 0
+		} 
+		return i 
+	}
+}
+
+func baba(){
 
 }
