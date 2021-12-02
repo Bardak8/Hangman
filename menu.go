@@ -63,7 +63,6 @@ func debut() {
 	}
 }
 
-
 func Readword1() {
 
 	content, err := ioutil.ReadFile("words.txt")
@@ -94,9 +93,3 @@ func Readword3() {
 
 	fmt.Println(string(content))
 }
-
-func Guesstheword() {
-
-
-
-}  	
