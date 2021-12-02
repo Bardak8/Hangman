@@ -100,10 +100,33 @@ func wordToUnderscore(motChoisi string) string {
 	return str2
 }
 
-func Guesstheword() {
-
+func Guesstheword(hiddenword string, chosenletter rune, motChoisi) string{
 	INletter := bufio.NewScanner(os.Stdin)
 	INletter.Scan()
+	letter := Capitalize(INletter.Text())	// pff nul
+	hiddenword = motChoisi
+	for_, INletter := range motChoisi {
+		if motChoisi strings.Contains(INletter) {
+			hiddenword = []hiddenword += INletter += 
+		} else {
+			return true
+		}
+	}
+}
+func Contains(tab []string, s string) bool { // Si une string est contenue dans un tableau
+	for _, a := range tab {
+		if a == s {
+			return true
+		}
+	}
+	return false
+}
+ 
 
+func stock() {
+	for _,letter := hiddenword {
+   		if hiddenword { 
 
+   		}
+	}
 }

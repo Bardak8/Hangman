@@ -1,5 +1,10 @@
 package main
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 1470a3caefdb4f1eb4e5ad77633c95c535058e1d
 func IsLetter2(r rune) bool {
 	lettermaj := ('A' <= r) && (r <= 'Z')
 	lettermin := ('a' <= r) && (r <= 'z')
@@ -34,4 +39,8 @@ func Capitalize(s string) string {
 		}
 	}
 	return string(str2)
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 1470a3caefdb4f1eb4e5ad77633c95c535058e1d
