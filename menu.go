@@ -100,8 +100,6 @@ func wordToUnderscore(motChoisi string) string {
 	return str2
 }
 
-func Replace 
-
 func Guesstheword(hiddenword string, motChoisi []string) string{
 	INletter := bufio.NewScanner(os.Stdin)
 	INletter.Scan()
@@ -135,9 +133,11 @@ func stock() {
 	}
 }
 
-func Replace(mot string lettre rune z int) {
+func Replace(hidden []rune str string ) {
 
-	if _,
+	hidden := []rune(str[nb])
+			s[2] = 'y'
+			str[0] = string(s)
 
 
 }
