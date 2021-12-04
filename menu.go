@@ -70,8 +70,14 @@ func startGame(filename string, nbword int) {
 	wordfound := Readword(filename, nbword)
 	wordfoundunderscore := wordToUnderscore(wordfound)
 	fmt.Println(wordfoundunderscore)
+	for {
+		if testmot(wordfound) {
+			fmt.Println("vous avez gagné")
+			break
+		}
+	}
+	// trouve le mot et transforme le mot choisi en underscore
 }
-
 func Readword(filename string, nbword int) string {
 	rand.Seed(time.Now().UnixNano())
 	randnumber := (rand.Intn(nbword))
@@ -101,32 +107,57 @@ func wordToUnderscore(motChoisi string) string {
 	return (string(result))
 }
 
-// func replace(hiddenword string, motChoisi string) string {
-// 	INletter := bufio.NewScanner(os.Stdin)
-// 	INletter.Scan()
-// 	i := findIndex(hiddenword, motChoisi)
-// 	var res string
-// 	str1 := hiddenword[i]
-// 	str2 := motChoisi[i]
-// 	str3 := []rune(hiddenword)
-// 	for i, lettre := range hiddenword {
-// 		if i >= 0 {
-// 			res == (str3-str1)+str2
-// 		} else {
-// 			nil
-// 		}
-// 	}
-// 	return res
-// }
+func replace(hiddenword string, motChoisi string) string {
+	INletter := bufio.NewScanner(os.Stdin)
+	INletter.Scan()
+	i := findIndex(hiddenword, motChoisi)
+	//var res string
+	//str1 := hiddenword[i]
+	//str2 := motChoisi[i]
+	//str3 := []rune(hiddenword)
+	//for i, lettre := range hiddenword {
+	if i >= 0 {
+		//		res == (str3-str1)+str2
+	} else {
+		//		nil
+	}
+	//}
+	return ""
+}
 
-// func findIndex(hiddenword string, motChoisi string) int {
-// 	var lettre bool
-// 	for i, letter := range motChoisi {
-// 		lettre = Contains(motChoisi, rune(letter))
-// 		if lettre == false {
-// 			fmt.Print("raté")
-// 		}
-// 		return i
-// 	}
-// 	return -1
-// }
+func findIndex(hiddenword string, motChoisi string) int {
+	var lettre bool
+	for i, letter := range motChoisi {
+		lettre = Contains(motChoisi, rune(letter))
+		if lettre == false {
+			fmt.Print("raté")
+		}
+		return i
+	}
+	return -1
+}
+
+func testmot(wordfound string) bool {
+
+	fmt.Println("Veuillez saisir une lettre ou un mot")
+	// créer une var scanner qui va lire ce que l'utilisateur va écrire
+	scanner := bufio.NewScanner(os.Stdin)
+
+	scanner.Scan() // l'utilisateur input dans la console
+
+	// lis ce que l'utilisateur a écrit
+	fmt.Println(wordfound)
+	lettreoumot := scanner.Text()
+	if len(lettreoumot) == 1 {
+		testlettre()
+	} else {
+		if lettreoumot == wordfound {
+			return true
+		}
+	}
+	return false
+}
+
+func testlettre() bool {
+	return false
+}
