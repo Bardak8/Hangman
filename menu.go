@@ -83,6 +83,7 @@ func Readword(filename string, nbword int) string {
       line := scanner.Text()
 	  index++
 	  if index == randnumber {
+		  fmt.Println(line)
 		  return line
 	  }
     }
