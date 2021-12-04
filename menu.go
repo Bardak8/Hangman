@@ -4,10 +4,10 @@ import (
 	"bufio"
 	"fmt"
 	"math/rand"
+	"regexp"
 
 	// "math/rand"
 	"os"
-	"strings"
 	"time"
 )
 
@@ -67,35 +67,39 @@ func debut() {
 }
 
 func startGame(filename string, nbword int) {
-	Readword(filename, nbword)
+	wordfound := Readword(filename, nbword)
+	wordfoundunderscore := wordToUnderscore(wordfound)
+	fmt.Println(wordfoundunderscore)
 }
 
 func Readword(filename string, nbword int) string {
 	rand.Seed(time.Now().UnixNano())
 	randnumber := (rand.Intn(nbword))
 	// Open the file.
-    f, _ := os.Open(filename)
-    // Create a new Scanner for the file.
-    scanner := bufio.NewScanner(f)
-    // Loop over all lines in the file and print them.
+	f, _ := os.Open(filename)
+	// Create a new Scanner for the file.
+	scanner := bufio.NewScanner(f)
+	// Loop over all lines in the file and print them.
 	index := 1
-    for scanner.Scan() {
-      line := scanner.Text()
-	  index++
-	  if index == randnumber {
-		  fmt.Println(line)
-		  return line
-	  }
-    }
+	for scanner.Scan() {
+		line := scanner.Text()
+		index++
+		if index == randnumber {
+			fmt.Println(line)
+			return line
+		}
+	}
 	return ""
 }
 
-
 func wordToUnderscore(motChoisi string) string {
-	str2 := strings.ReplaceAll(motChoisi, "[a-zA-Z]", "_") // remplace chaque lettre "_"
-	return str2
-}
+	sampleRegexp := regexp.MustCompile("[a-z,A-Z]")
 
+	input := motChoisi
+
+	result := sampleRegexp.ReplaceAllString(input, "_")
+	return (string(result))
+}
 
 // func replace(hiddenword string, motChoisi string) string {
 // 	INletter := bufio.NewScanner(os.Stdin)
