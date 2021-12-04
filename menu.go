@@ -4,12 +4,16 @@ import (
 	"bufio"
 	"fmt"
 	"math/rand"
+	"regexp"
+	"strings"
 
 	// "math/rand"
 	"os"
-	"strings"
 	"time"
 )
+
+var wordhidden string
+var word string
 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
@@ -67,9 +71,17 @@ func debut() {
 }
 
 func startGame(filename string, nbword int) {
-	Readword(filename, nbword)
+	word = Readword(filename, nbword)
+	wordhidden = wordToUnderscore()
+	fmt.Println(wordhidden)
+	for {
+		if testmot() {
+			fmt.Println("vous avez gagné")
+			break
+		}
+	}
+	// trouve le mot et transforme le mot choisi en underscore
 }
-
 func Readword(filename string, nbword int) string {
 	rand.Seed(time.Now().UnixNano())
 	randnumber := (rand.Intn(nbword))
@@ -90,24 +102,53 @@ func Readword(filename string, nbword int) string {
 	return ""
 }
 
-func wordToUnderscore(motChoisi string) string {
-	str2 := strings.ReplaceAll(motChoisi, "[a-zA-Z]", "_") // remplace chaque lettre "_"
-	return str2
+func wordToUnderscore() string {
+	sampleRegexp := regexp.MustCompile("[a-z,A-Z]")
+
+	input := word
+
+	result := sampleRegexp.ReplaceAllString(input, "_")
+	return (string(result))
 }
 
-func findAndReplace(hiddenword string, letterToReplace string, motChoisi string) string {
-	isFound := strings.Index(motChoisi, letterToReplace)
+func findAndReplace(letterToReplace string) string {
+	isFound := strings.Index(word, letterToReplace)
 	if isFound == -1 {
-		return hiddenword
+		return wordhidden
 		// mettre à jour le score
 	} else {
 		// var res string
 		// str1 := hiddenword[i]
 		// str2 := motChoisi[i]
-		// str3 := []rune(hiddenword)
-		for i, lettre := range motChoisi {
-			fmt.Println(i, lettre)
+		str3 := []rune(wordhidden)
+		for i, lettre := range word {
+			if string(lettre) == letterToReplace {
+				str3[i] = lettre
+				wordhidden = string(str3)
+				fmt.Println(wordhidden)
+			}
 		}
 	}
-	return hiddenword
+	return wordhidden
+}
+
+func testmot() bool {
+
+	fmt.Println("Veuillez saisir une lettre ou un mot")
+	// créer une var scanner qui va lire ce que l'utilisateur va écrire
+	scanner := bufio.NewScanner(os.Stdin)
+
+	scanner.Scan() // l'utilisateur input dans la console
+
+	// lis ce que l'utilisateur a écrit
+	println(wordhidden)
+	lettreoumot := scanner.Text()
+	if len(lettreoumot) == 1 {
+		findAndReplace(lettreoumot)
+	} else {
+		if lettreoumot == word {
+			return true
+		}
+	}
+	return false
 }
