@@ -3,8 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
-	"log"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -22,6 +21,7 @@ func SlowPrint(str ...string) {
 		}
 	}
 }
+
 func start() {
 	SlowPrint("Bonjour ")
 	fmt.Println("1 = Démarrer l'éxécution")
@@ -64,35 +64,26 @@ func debut() {
 	}
 }
 
-func Readword1() {
-
-	content, err := ioutil.ReadFile("words.txt")
-
-	if err != nil {
-		log.Fatal(err)
+func Readword1() string {
+	var word string
+	file, _ := os.Open("words.txt")
+	scanner := bufio.NewScanner(file)
+	rand.Seed(time.Now().UnixNano())
+	(rand.Intn(30))
+	for scanner.Text() {
+		fmt.println("azejazoejzpajejpzeporjzerozreozro")
 	}
 
-	fmt.Println(string(content))
 }
 func Readword2() {
 
-	content, err := ioutil.ReadFile("words2.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(content))
+	file, _ := os.Open("words2.txt")
+	scanner := bufio.NewScanner(file)
 }
 func Readword3() {
 
-	content, err := ioutil.ReadFile("words3.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(content))
+	file, _ := os.Open("words3.txt")
+	scanner := bufio.NewScanner(file)
 }
 
 func wordToUnderscore(motChoisi string) string {
@@ -100,44 +91,26 @@ func wordToUnderscore(motChoisi string) string {
 	return str2
 }
 
-func Guesstheword(hiddenword string, motChoisi []string) string{
+func replace(hiddenword string, motChoisi string) string {
 	INletter := bufio.NewScanner(os.Stdin)
 	INletter.Scan()
-	letter := Capitalize(INletter.Text())	
-	hiddenword[i] = motChoisi[i]
-	for_, INletter := range motChoisi {
-		if Contains(motChoisi, INletter) {
-			hiddenword := []rune(str[0])
-			s[2] = 'y'
-			str[0] = string(s)
-		} else {
-			return true
+	{
+
+	}
+}
+
+func findIndex(hiddenword string, motChoisi string) int {
+
+	var lettre bool
+	for i, letter := range motChoisi {
+		lettre = Contains(motChoisi, rune(letter))
+		if lettre == true {
+			return i
 		}
 	}
-}
-func Contains(tab []string, s string) bool { // Si une string est contenue dans un tableau
-	for _, a := range tab {
-		if a == s {
-			return true
-		}
-	}
-	return false
-}
- 
-
-func stock() {
-	for _,letter := hiddenword {
-   		if hiddenword { 
-
-   		}
-	}
+	return 0
 }
 
-func Replace(hidden []rune str string ) {
-
-	hidden := []rune(str[nb])
-			s[2] = 'y'
-			str[0] = string(s)
-
+func baba() {
 
 }
