@@ -3,8 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"io/ioutil"
-	"log"
+	"math/rand"
 	"os"
 	"strings"
 	"time"
@@ -65,35 +64,26 @@ func debut() {
 	}
 }
 
-func Readword1() {
-
-	content, err := ioutil.ReadFile("words.txt")
-
-	if err != nil {
-		log.Fatal(err)
+func Readword1() string {
+	var word string
+	file, _ := os.Open("words.txt")
+	scanner := bufio.NewScanner(file)
+	rand.Seed(time.Now().UnixNano())
+	(rand.Intn(30))
+	for scanner.Text() {
+		fmt.println("azejazoejzpajejpzeporjzerozreozro")
 	}
 
-	fmt.Println(string(content))
 }
 func Readword2() {
 
-	content, err := ioutil.ReadFile("words2.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(content))
+	file, _ := os.Open("words2.txt")
+	scanner := bufio.NewScanner(file)
 }
 func Readword3() {
 
-	content, err := ioutil.ReadFile("words3.txt")
-
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	fmt.Println(string(content))
+	file, _ := os.Open("words3.txt")
+	scanner := bufio.NewScanner(file)
 }
 
 func wordToUnderscore(motChoisi string) string {
@@ -104,6 +94,7 @@ func wordToUnderscore(motChoisi string) string {
 func replace(hiddenword string, motChoisi string) string {
 	INletter := bufio.NewScanner(os.Stdin)
 	INletter.Scan()
+<<<<<<< HEAD
 	i := findIndex(hiddenword, motChoisi)
 	var res string
 	str1 := hiddenword[i]
@@ -115,11 +106,16 @@ func replace(hiddenword string, motChoisi string) string {
 		} else {
 			nil
 		}
+=======
+	{
+
+>>>>>>> d02e62277dc72f5bebda56994116419a379ccd5f
 	}
 	return res
 }
 
 func findIndex(hiddenword string, motChoisi string) int {
+<<<<<<< HEAD
 	var lettre bool
 	for i, letter := range motChoisi {
 		lettre = Contains(motChoisi, rune(letter))
@@ -130,3 +126,19 @@ func findIndex(hiddenword string, motChoisi string) int {
 	}
 	return -1
 }
+=======
+
+	var lettre bool
+	for i, letter := range motChoisi {
+		lettre = Contains(motChoisi, rune(letter))
+		if lettre == true {
+			return i
+		}
+	}
+	return 0
+}
+
+func baba() {
+
+}
+>>>>>>> d02e62277dc72f5bebda56994116419a379ccd5f
