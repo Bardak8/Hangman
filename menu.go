@@ -74,55 +74,40 @@ func Readword(filename string, nbword int) string {
 	rand.Seed(time.Now().UnixNano())
 	randnumber := (rand.Intn(nbword))
 	// Open the file.
-    f, _ := os.Open(filename)
-    // Create a new Scanner for the file.
-    scanner := bufio.NewScanner(f)
-    // Loop over all lines in the file and print them.
+	f, _ := os.Open(filename)
+	// Create a new Scanner for the file.
+	scanner := bufio.NewScanner(f)
+	// Loop over all lines in the file and print them.
 	index := 1
-    for scanner.Scan() {
-      line := scanner.Text()
-	  index++
-	  if index == randnumber {
-		  fmt.Println(line)
-		  return line
-	  }
-    }
+	for scanner.Scan() {
+		line := scanner.Text()
+		index++
+		if index == randnumber {
+			fmt.Println(line)
+			return line
+		}
+	}
 	return ""
 }
-
 
 func wordToUnderscore(motChoisi string) string {
 	str2 := strings.ReplaceAll(motChoisi, "[a-zA-Z]", "_") // remplace chaque lettre "_"
 	return str2
 }
 
-
-// func replace(hiddenword string, motChoisi string) string {
-// 	INletter := bufio.NewScanner(os.Stdin)
-// 	INletter.Scan()
-// 	i := findIndex(hiddenword, motChoisi)
-// 	var res string
-// 	str1 := hiddenword[i]
-// 	str2 := motChoisi[i]
-// 	str3 := []rune(hiddenword)
-// 	for i, lettre := range hiddenword {
-// 		if i >= 0 {
-// 			res == (str3-str1)+str2
-// 		} else {
-// 			nil
-// 		}
-// 	}
-// 	return res
-// }
-
-// func findIndex(hiddenword string, motChoisi string) int {
-// 	var lettre bool
-// 	for i, letter := range motChoisi {
-// 		lettre = Contains(motChoisi, rune(letter))
-// 		if lettre == false {
-// 			fmt.Print("raté")
-// 		}
-// 		return i
-// 	}
-// 	return -1
-// }
+func findAndReplace(hiddenword string, letterToReplace string, motChoisi string) string {
+	isFound := strings.Index(motChoisi, letterToReplace)
+	if isFound == -1 {
+		return hiddenword
+		// mettre à jour le score
+	} else {
+		// var res string
+		// str1 := hiddenword[i]
+		// str2 := motChoisi[i]
+		// str3 := []rune(hiddenword)
+		for i, lettre := range motChoisi {
+			fmt.Println(i, lettre)
+		}
+	}
+	return hiddenword
+}
