@@ -71,7 +71,7 @@ func Readword1() string {
 	rand.Seed(time.Now().UnixNano())
 	(rand.Intn(30))
 	for scanner.Text() {
-		fmt.println("azejazoejzpajejpzeporjzerozreozro")
+		
 	}
 
 }
