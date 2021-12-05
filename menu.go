@@ -12,7 +12,7 @@ import (
 	"time"
 )
 
-var deathcount int = 15
+var deathCount int = 10
 var count int = 0
 var wordhidden string
 var word string
@@ -116,8 +116,17 @@ func wordToUnderscore() string {
 func findAndReplace(letterToReplace string) string {
 	isFound := strings.Index(word, letterToReplace)
 	if isFound == -1 {
-		return wordhidden
-		// mettre à jour le score
+		if deathCount > 1 {
+			deathCount--
+			fmt.Println("raté")
+			fmt.Println("ils vous restent", deathCount, "essaies")
+			return wordhidden
+			// mettre à jour le score
+		}
+		if deathCount == 1 {
+			deathCount--
+			Retry()
+		}
 	} else {
 		// var res string
 		// str1 := hiddenword[i]
@@ -128,7 +137,6 @@ func findAndReplace(letterToReplace string) string {
 				str3[i] = lettre
 				wordhidden = string(str3)
 				fmt.Println(wordhidden)
-
 			}
 		}
 	}
@@ -137,7 +145,7 @@ func findAndReplace(letterToReplace string) string {
 
 func testmot() bool {
 	count++
-	countprint()
+	countPrint()
 	fmt.Println("Veuillez saisir une lettre ou un mot")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
 	scanner := bufio.NewScanner(os.Stdin)
@@ -157,15 +165,70 @@ func testmot() bool {
 	return false
 }
 
-func Deathcount() {
+func deathCountStage() {
+	if deathCount == 10 {
 
+	}
+	if deathCount == 9 {
+
+	}
+	if deathCount == 8 {
+
+	}
+	if deathCount == 7 {
+
+	}
+	if deathCount == 6 {
+
+	}
+	if deathCount == 5 {
+
+	}
+	if deathCount == 4 {
+
+	}
+	if deathCount == 3 {
+
+	}
+	if deathCount == 2 {
+
+	}
+	if deathCount == 1 {
+
+	}
+	if deathCount == 0 {
+		fmt.Println("Vous avez perdu")
+	}
 }
 
-func countprint() {
+func countPrint() {
 	if count == 1 {
 		fmt.Println("------------", count, "er tour", "-------------")
 	}
 	if count > 1 {
 		fmt.Println("-------------", count, "ème tour", "-------------")
+	}
+}
+
+func Retry() {
+	count = 0
+	deathCount = 10
+	SlowPrint("Vous avez perdu \n")
+	SlowPrint("Voulez vous recommencez? \n")
+	fmt.Println("1 = Oui")
+	fmt.Println("2 = Non")
+	// créer une var scanner qui va lire ce que l'utilisateur va écrire
+	scanner := bufio.NewScanner(os.Stdin)
+
+	scanner.Scan() // l'utilisateur input dans la console
+
+	// lis ce que l'utilisateur a écrit
+	o := scanner.Text()
+	switch o {
+	case "1":
+		Clear()
+		debut()
+	case "2":
+		os.Exit(2)
 	}
 }
