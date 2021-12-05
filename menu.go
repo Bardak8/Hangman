@@ -51,7 +51,7 @@ func start() {
 }
 
 func debut() {
-	SlowPrint("Vous ")
+	SlowPrint("Vous \n")
 	fmt.Println("1 = Choisir la premiere version")
 	fmt.Println("2 = Choisir la deuxieme version")
 	fmt.Println("3 = Choisir la troisieme version")
@@ -77,7 +77,7 @@ func startGame(filename string, nbword int) {
 	wordhidden = wordToUnderscore()
 	fmt.Println(wordhidden)
 	for {
-		if testmot() {
+		if testmot() || !Contains(wordhidden, '_'){
 			fmt.Println("vous avez gagné")
 			break
 		}
@@ -97,7 +97,7 @@ func Readword(filename string, nbword int) string {
 		line := scanner.Text()
 		index++
 		if index == randnumber {
-			fmt.Println(line)
+			println(line)
 			return line
 		}
 	}
@@ -120,7 +120,7 @@ func findAndReplace(letterToReplace string) string {
 			deathCount--
 			deathCountStage()
 			fmt.Println("raté")
-			fmt.Println("ils vous restent", deathCount, "essaies")
+			fmt.Println("Il vous reste", deathCount, "essais")
 			return wordhidden
 			// mettre à jour le score
 		}
@@ -157,7 +157,7 @@ func testmot() bool {
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
-	if len(lettreoumot) == 1 {
+	if len(lettreoumot) == 1  {
 		findAndReplace(lettreoumot)
 	} else {
 		if lettreoumot == word {
