@@ -16,7 +16,6 @@ var deathCount int = 10
 var count int = 0
 var wordhidden string
 var word string
-var guessedletter string = ""
 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
@@ -79,7 +78,7 @@ func startGame(filename string, nbword int) {
 	fmt.Println(wordhidden)
 	for {
 		if testmot() || !Contains(wordhidden, '_') {
-			fmt.Println("vous avez gagné")
+			displayWinMessage()
 			break
 		}
 	}
@@ -154,17 +153,20 @@ func testmot() bool {
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
+	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
 	if err != nil {
 		fmt.Printf("Malheureusement cela ne marche pas ")
 		fmt.Printf("Partir %v", lettreoumot)
 		return testmot()
 	}
-	if isALetter {
+	if !isALetter {
 		fmt.Printf("Ce n'est pas une lettre !\n")
 		return testmot()
 	}
 	if len(lettreoumot) == 1 {
+		guessedletter += lettreoumot
+		fmt.Println("vous avez utilisé les lettres :", guessedletter)
 		findAndReplace(lettreoumot)
 	} else {
 		if lettreoumot == word {
@@ -299,7 +301,7 @@ func countPrint() {
 func Retry() {
 	count = 0
 	deathCount = 10
-	SlowPrint("Vous avez perdu \n")
+	displayLoseMessage()
 	SlowPrint("Voulez vous recommencez? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
@@ -319,3 +321,16 @@ func Retry() {
 	}
 }
 
+func displayWinMessage() {
+	fmt.Println()
+	fmt.Println("Tu as découvert le bon mot en ", count, " essai")
+	fmt.Println("Votre mot était: ", word)
+	fmt.Println("Bravo, vous avez sauvé le pendu")
+}
+
+func displayLoseMessage() {
+	fmt.Println()
+	fmt.Println("Raté ! Tu n'as pas réussi à découvrir le mot")
+	fmt.Println("Votre mot choisi était : ", word)
+	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
+}
