@@ -319,6 +319,3 @@ func Retry() {
 	}
 }
 
-func stock() {
-
-}
