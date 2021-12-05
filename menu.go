@@ -118,6 +118,7 @@ func findAndReplace(letterToReplace string) string {
 	if isFound == -1 {
 		if deathCount > 1 {
 			deathCount--
+			deathCountStage()
 			fmt.Println("raté")
 			fmt.Println("ils vous restent", deathCount, "essaies")
 			return wordhidden
@@ -125,6 +126,7 @@ func findAndReplace(letterToReplace string) string {
 		}
 		if deathCount == 1 {
 			deathCount--
+			deathCountStage()
 			Retry()
 		}
 	} else {
@@ -166,38 +168,115 @@ func testmot() bool {
 }
 
 func deathCountStage() {
-	if deathCount == 10 {
-
-	}
 	if deathCount == 9 {
-
+		fmt.Printf("      \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("       \n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 8 {
-
+		fmt.Printf("      \n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 7 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 6 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 5 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 4 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 3 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf(" /|   |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 2 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf(" /|/  |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 1 {
-
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf(" /|/ |\n")
+		fmt.Printf(" /   |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 	if deathCount == 0 {
-		fmt.Println("Vous avez perdu")
+		fmt.Printf("  +---+\n")
+		fmt.Printf("  |   |\n")
+		fmt.Printf("  O   |\n")
+		fmt.Printf(" /|/  |\n")
+		fmt.Printf(" / /  |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("      |\n")
+		fmt.Printf("========\n")
 	}
 }
 
