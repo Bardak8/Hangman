@@ -16,6 +16,7 @@ var deathCount int = 10
 var count int = 0
 var wordhidden string
 var word string
+var guessedletter string = ""
 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
@@ -130,9 +131,6 @@ func findAndReplace(letterToReplace string) string {
 			Retry()
 		}
 	} else {
-		// var res string
-		// str1 := hiddenword[i]
-		// str2 := motChoisi[i]
 		str3 := []rune(wordhidden)
 		for i, lettre := range word {
 			if string(lettre) == letterToReplace {
@@ -153,10 +151,19 @@ func testmot() bool {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	scanner.Scan() // l'utilisateur input dans la console
-
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
+	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
+	if err != nil {
+		fmt.Printf("Malheureusement cela ne marche pas ")
+		fmt.Printf("Partir %v", lettreoumot)
+		return testmot()
+	}
+	if isALetter {
+		fmt.Printf("Ce n'est pas une lettre !\n")
+		return testmot()
+	}
 	if len(lettreoumot) == 1 {
 		findAndReplace(lettreoumot)
 	} else {
@@ -312,6 +319,6 @@ func Retry() {
 	}
 }
 
-func Keep() {
+func stock() {
 
 }
