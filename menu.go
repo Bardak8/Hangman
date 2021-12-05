@@ -77,7 +77,7 @@ func startGame(filename string, nbword int) {
 	wordhidden = wordToUnderscore()
 	fmt.Println(wordhidden)
 	for {
-		if testmot() || !Contains(wordhidden, '_'){
+		if testmot() || !Contains(wordhidden, '_') {
 			fmt.Println("vous avez gagné")
 			break
 		}
@@ -157,7 +157,7 @@ func testmot() bool {
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
-	if len(lettreoumot) == 1  {
+	if len(lettreoumot) == 1 {
 		findAndReplace(lettreoumot)
 	} else {
 		if lettreoumot == word {
@@ -310,4 +310,8 @@ func Retry() {
 	case "2":
 		os.Exit(2)
 	}
+}
+
+func Keep() {
+
 }

@@ -3,8 +3,7 @@ package main
 func IsLetter2(r rune) bool {
 	lettermaj := ('A' <= r) && (r <= 'Z')
 	lettermin := ('a' <= r) && (r <= 'z')
-	letternum := ('0' <= r) && (r <= '9')
-	if lettermaj || lettermin || letternum {
+	if lettermaj || lettermin {
 		return true
 	}
 	return false
