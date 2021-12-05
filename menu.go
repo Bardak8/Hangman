@@ -82,7 +82,6 @@ func startGame(filename string, nbword int) {
 		if testmot() || !Contains(wordhidden, '_') {
 			displayWinMessage()
 			Retry()
-			break 
 		}
 	}
 	// trouve le mot et transforme le mot choisi en underscore
@@ -130,6 +129,7 @@ func findAndReplace(letterToReplace string) string {
 		if deathCount == 1 {
 			deathCount--
 			deathCountStage()
+			displayLoseMessage()
 			Retry()
 		}
 	} else {
@@ -173,7 +173,7 @@ func testmot() bool {
 	}
 	if len(lettreoumot) == 1  {
 		guessedletter += lettreoumot
-		fmt.Println("vous avez utilisé les lettres :", guessedletter)
+		fmt.Println("vous avez déjà utilisé les lettres suivantes :", guessedletter)
 		findAndReplace(lettreoumot)
 	} else if lettreoumot == word {
 				return true
@@ -314,7 +314,6 @@ func countPrint() {
 func Retry() {
 	count = 0
 	deathCount = 10
-	displayLoseMessage()
 	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
