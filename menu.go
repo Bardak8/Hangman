@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+var deathcount int = 15
+var count int = 0
 var wordhidden string
 var word string
 
@@ -126,6 +128,7 @@ func findAndReplace(letterToReplace string) string {
 				str3[i] = lettre
 				wordhidden = string(str3)
 				fmt.Println(wordhidden)
+
 			}
 		}
 	}
@@ -133,7 +136,8 @@ func findAndReplace(letterToReplace string) string {
 }
 
 func testmot() bool {
-
+	count++
+	countprint()
 	fmt.Println("Veuillez saisir une lettre ou un mot")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
 	scanner := bufio.NewScanner(os.Stdin)
@@ -151,4 +155,17 @@ func testmot() bool {
 		}
 	}
 	return false
+}
+
+func Deathcount() {
+
+}
+
+func countprint() {
+	if count == 1 {
+		fmt.Println("------------", count, "er tour", "-------------")
+	}
+	if count > 1 {
+		fmt.Println("-------------", count, "ème tour", "-------------")
+	}
 }
