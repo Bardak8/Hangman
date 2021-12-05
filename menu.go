@@ -19,6 +19,7 @@ var word string
 
 
 
+
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 }
@@ -53,7 +54,7 @@ func start() {
 }
 
 func debut() {
-	SlowPrint("Vous \n")
+	SlowPrint("Quelle bibliothèque de mot souhaitez vous choisir ? \n")
 	fmt.Println("1 = Choisir la premiere version")
 	fmt.Println("2 = Choisir la deuxieme version")
 	fmt.Println("3 = Choisir la troisieme version")
@@ -81,6 +82,7 @@ func startGame(filename string, nbword int) {
 	for {
 		if testmot() || !Contains(wordhidden, '_'){
 			displayWinMessage()
+			Retry()
 			break 
 		}
 	}
@@ -162,24 +164,28 @@ func testmot() bool {
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
 
-		if err != nil {
-			fmt.Printf("Malheureusement cela ne marche pas ")
-			fmt.Printf("Partir %v", lettreoumot)
-			return testmot()
-		}
-		if !isALetter {
-			fmt.Printf("Ce n'est pas une lettre !\n")
-			return testmot()			
-		}
+	if err != nil {
+		fmt.Printf("Malheureusement cela ne marche pas ")
+		fmt.Printf("Partir %v", lettreoumot)
+		return testmot()
+	}
+	if !isALetter {
+		fmt.Printf("Ce n'est pas une lettre !\n")
+		return testmot()			
+	}
 	if len(lettreoumot) == 1  {
 		findAndReplace(lettreoumot)
-	} else {
-		if lettreoumot == word {
+	} else if lettreoumot == word {
 				return true
+			} else if (len(lettreoumot) == len(word)) && wordhidden == word {
+				return true 
+			} else {
+				fmt.Println("Vous n'avez pas trouvé le bon mot")
+				deathCount -= 2				
+				deathCountStage()
 			}
+			return false
 	}
-	return false
-}
 
 func deathCountStage() {
 	if deathCount == 9 {
@@ -294,6 +300,7 @@ func deathCountStage() {
 	}
 }
 
+// Compte le nombre de tour
 func countPrint() {
 	if count == 1 {
 		fmt.Println("------------", count, "er tour", "-------------")
@@ -307,14 +314,14 @@ func Retry() {
 	count = 0
 	deathCount = 10
 	displayLoseMessage()
-	SlowPrint("Voulez vous recommencez? \n")
+	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
 	scanner := bufio.NewScanner(os.Stdin)
 
 	scanner.Scan() // l'utilisateur input dans la console
-
+	
 	// lis ce que l'utilisateur a écrit
 	o := scanner.Text()
 	switch o {
@@ -323,6 +330,10 @@ func Retry() {
 		debut()
 	case "2":
 		os.Exit(2)
+	}
+	if !Contains(o, '1') || !Contains(o, '2') {		
+		fmt.Println("Veuillez saisir une des réponses proposées")
+		Retry()		
 	}
 }
 
