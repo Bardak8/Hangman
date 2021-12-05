@@ -16,8 +16,7 @@ var deathCount int = 10
 var count int = 0
 var wordhidden string
 var word string
-
-
+var guessedletter string = ""
 
 
 func Clear() {
@@ -80,7 +79,7 @@ func startGame(filename string, nbword int) {
 	wordhidden = wordToUnderscore()
 	fmt.Println(wordhidden)
 	for {
-		if testmot() || !Contains(wordhidden, '_'){
+		if testmot() || !Contains(wordhidden, '_') {
 			displayWinMessage()
 			Retry()
 			break 
@@ -134,9 +133,6 @@ func findAndReplace(letterToReplace string) string {
 			Retry()
 		}
 	} else {
-		// var res string
-		// str1 := hiddenword[i]
-		// str2 := motChoisi[i]
 		str3 := []rune(wordhidden)
 		for i, lettre := range word {
 			if string(lettre) == letterToReplace {
@@ -148,7 +144,6 @@ func findAndReplace(letterToReplace string) string {
 	}
 	return wordhidden
 }
-
 
 func testmot() bool {
 	count++
@@ -163,7 +158,10 @@ func testmot() bool {
 	lettreoumot := scanner.Text()
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
-
+	if lettreoumot == guessedletter {
+		fmt.Println("vous avez utilisé les lettres :", guessedletter)
+		fmt.Println("vous avez deja rentré cette lettre")
+	} else {
 	if err != nil {
 		fmt.Printf("Malheureusement cela ne marche pas ")
 		fmt.Printf("Partir %v", lettreoumot)
@@ -174,6 +172,8 @@ func testmot() bool {
 		return testmot()			
 	}
 	if len(lettreoumot) == 1  {
+		guessedletter += lettreoumot
+		fmt.Println("vous avez utilisé les lettres :", guessedletter)
 		findAndReplace(lettreoumot)
 	} else if lettreoumot == word {
 				return true
@@ -184,6 +184,7 @@ func testmot() bool {
 				deathCount -= 2				
 				deathCountStage()
 			}
+		}
 			return false
 	}
 
@@ -340,13 +341,15 @@ func Retry() {
 func displayWinMessage() {
 	fmt.Println()
 	fmt.Println("Tu as découvert le bon mot en ", count, " essai")
-	fmt.Println( "Votre mot était: ", word)
+	fmt.Println("Votre mot était: ", word)
 	fmt.Println("Bravo, vous avez sauvé le pendu")
 }
 
-func displayLoseMessage()  {
+func displayLoseMessage() {
 	fmt.Println()
 	fmt.Println("Raté ! Tu n'as pas réussi à découvrir le mot")
 	fmt.Println("Votre mot choisi était : ", word)
 	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
 }
+
+
