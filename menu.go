@@ -17,6 +17,8 @@ var count int = 0
 var wordhidden string
 var word string
 
+
+
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 }
@@ -145,6 +147,7 @@ func findAndReplace(letterToReplace string) string {
 	return wordhidden
 }
 
+
 func testmot() bool {
 	count++
 	countPrint()
@@ -153,16 +156,26 @@ func testmot() bool {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	scanner.Scan() // l'utilisateur input dans la console
-
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
+	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
+		if err != nil {
+			fmt.Printf("Malheureusement cela ne marche pas ")
+			fmt.Printf("Partir %v", lettreoumot)
+			return testmot()
+		}
+		if isALetter == false {
+			fmt.Printf("Ce n'est pas une lettre !\n")
+			return testmot()
+			
+		}
 	if len(lettreoumot) == 1  {
 		findAndReplace(lettreoumot)
 	} else {
 		if lettreoumot == word {
-			return true
-		}
+				return true
+			}
 	}
 	return false
 }
@@ -311,3 +324,4 @@ func Retry() {
 		os.Exit(2)
 	}
 }
+
