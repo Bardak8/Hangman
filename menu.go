@@ -34,7 +34,7 @@ func SlowPrint(str ...string) {
 }
 
 func start() {
-	SlowPrint("Bonjour \n")
+	SlowPrint("Bonjour et bienvenue dans le jeu du pendu\n")
 	fmt.Println("1 = Démarrer l'éxécution")
 	fmt.Println("2 = Non, je ne souhaite tuer personne")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
