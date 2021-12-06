@@ -18,7 +18,6 @@ var wordhidden string
 var word string
 var guessedletter string = ""
 
-
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
 }
@@ -82,7 +81,7 @@ func startGame(filename string, nbword int) {
 		if testmot() || !Contains(wordhidden, '_') {
 			displayWinMessage()
 			Retry()
-			break 
+			break
 		}
 	}
 	// trouve le mot et transforme le mot choisi en underscore
@@ -156,37 +155,38 @@ func testmot() bool {
 	// lis ce que l'utilisateur a écrit
 	println(wordhidden)
 	lettreoumot := scanner.Text()
+	lettreoumot = strings.ToLower(lettreoumot)
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
 	if lettreoumot == guessedletter {
 		fmt.Println("vous avez utilisé les lettres :", guessedletter)
 		fmt.Println("vous avez deja rentré cette lettre")
 	} else {
-	if err != nil {
-		fmt.Printf("Malheureusement cela ne marche pas ")
-		fmt.Printf("Partir %v", lettreoumot)
-		return testmot()
-	}
-	if !isALetter {
-		fmt.Printf("Ce n'est pas une lettre !\n")
-		return testmot()			
-	}
-	if len(lettreoumot) == 1  {
-		guessedletter += lettreoumot
-		fmt.Println("vous avez utilisé les lettres :", guessedletter)
-		findAndReplace(lettreoumot)
-	} else if lettreoumot == word {
-				return true
-			} else if (len(lettreoumot) == len(word)) && wordhidden == word {
-				return true 
-			} else {
-				fmt.Println("Vous n'avez pas trouvé le bon mot")
-				deathCount -= 2				
-				deathCountStage()
-			}
+		if err != nil {
+			fmt.Printf("Malheureusement cela ne marche pas ")
+			fmt.Printf("Partir %v", lettreoumot)
+			return testmot()
 		}
-			return false
+		if !isALetter {
+			fmt.Printf("Ce n'est pas une lettre !\n")
+			return testmot()
+		}
+		if len(lettreoumot) == 1 {
+			guessedletter += lettreoumot
+			fmt.Println("vous avez utilisé les lettres :", guessedletter)
+			findAndReplace(lettreoumot)
+		} else if lettreoumot == word {
+			return true
+		} else if (len(lettreoumot) == len(word)) && wordhidden == word {
+			return true
+		} else {
+			fmt.Println("Vous n'avez pas trouvé le bon mot")
+			deathCount -= 2
+			deathCountStage()
+		}
 	}
+	return false
+}
 
 func deathCountStage() {
 	if deathCount == 9 {
@@ -307,7 +307,7 @@ func countPrint() {
 		fmt.Println("------------", count, "er tour", "-------------")
 	}
 	if count > 1 {
-		fmt.Println("-------------", count, "ème tour", "-------------")
+		fmt.Println("------------", count, "ème tour", "-------------")
 	}
 }
 
@@ -322,7 +322,7 @@ func Retry() {
 	scanner := bufio.NewScanner(os.Stdin)
 
 	scanner.Scan() // l'utilisateur input dans la console
-	
+
 	// lis ce que l'utilisateur a écrit
 	o := scanner.Text()
 	switch o {
@@ -332,9 +332,9 @@ func Retry() {
 	case "2":
 		os.Exit(2)
 	}
-	if !Contains(o, '1') || !Contains(o, '2') {		
+	if !Contains(o, '1') || !Contains(o, '2') {
 		fmt.Println("Veuillez saisir une des réponses proposées")
-		Retry()		
+		Retry()
 	}
 }
 
@@ -351,5 +351,3 @@ func displayLoseMessage() {
 	fmt.Println("Votre mot choisi était : ", word)
 	fmt.Println("Vous essaierez de sauver le pendu une autre fois")
 }
-
-
