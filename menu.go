@@ -99,7 +99,6 @@ func Readword(filename string, nbword int) string {
 		line := scanner.Text()
 		index++
 		if index == randnumber {
-			println(line)
 			return line
 		}
 	}
@@ -181,9 +180,11 @@ func testmot() bool {
 		} else if (len(lettreoumot) == len(word)) && wordhidden == word {
 			return true
 		} else {
-			fmt.Println("Vous n'avez pas trouvé le bon mot")
+
 			deathCount -= 2
 			deathCountStage(deathCount)
+			fmt.Println("Vous n'avez pas trouvé le bon mot")
+			fmt.Println("Il vous reste", deathCount, "essais")
 		}
 	}
 	return false
