@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"log"
 	"math/rand"
 	"regexp"
 	"strings"
@@ -16,7 +17,7 @@ var deathCount int = 10
 var count int = 0
 var wordhidden string
 var word string
-var guessedletter string = ""
+var guessedletter []string
 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
@@ -32,7 +33,7 @@ func SlowPrint(str ...string) {
 }
 
 func start() {
-	SlowPrint("Bonjour \n")
+	SlowPrint("Bonjour et bienvenue dans le jeu du pendu\n")
 	fmt.Println("1 = Démarrer l'éxécution")
 	fmt.Println("2 = Non, je ne souhaite tuer personne")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
@@ -81,7 +82,6 @@ func startGame(filename string, nbword int) {
 		if testmot() || !Contains(wordhidden, '_') {
 			displayWinMessage()
 			Retry()
-			break
 		}
 	}
 	// trouve le mot et transforme le mot choisi en underscore
@@ -120,7 +120,7 @@ func findAndReplace(letterToReplace string) string {
 	if isFound == -1 {
 		if deathCount > 1 {
 			deathCount--
-			deathCountStage()
+			deathCountStage(deathCount)
 			fmt.Println("raté")
 			fmt.Println("Il vous reste", deathCount, "essais")
 			return wordhidden
@@ -128,7 +128,8 @@ func findAndReplace(letterToReplace string) string {
 		}
 		if deathCount == 1 {
 			deathCount--
-			deathCountStage()
+			deathCountStage(deathCount)
+			displayLoseMessage()
 			Retry()
 		}
 	} else {
@@ -158,7 +159,7 @@ func testmot() bool {
 	lettreoumot = strings.ToLower(lettreoumot)
 	// peret à l'utilisateur de savoir qu'il ne doit mettre que des lettres contenues dans l'alphabet latin
 	isALetter, err := regexp.MatchString("^[a-zA-Z]", lettreoumot)
-	if lettreoumot == guessedletter {
+	if Contains1(guessedletter, lettreoumot) {
 		fmt.Println("vous avez utilisé les lettres :", guessedletter)
 		fmt.Println("vous avez deja rentré cette lettre")
 	} else {
@@ -172,7 +173,7 @@ func testmot() bool {
 			return testmot()
 		}
 		if len(lettreoumot) == 1 {
-			guessedletter += lettreoumot
+			guessedletter = append(guessedletter, lettreoumot)
 			fmt.Println("vous avez utilisé les lettres :", guessedletter)
 			findAndReplace(lettreoumot)
 		} else if lettreoumot == word {
@@ -182,123 +183,71 @@ func testmot() bool {
 		} else {
 			fmt.Println("Vous n'avez pas trouvé le bon mot")
 			deathCount -= 2
-			deathCountStage()
+			deathCountStage(deathCount)
 		}
 	}
 	return false
 }
 
-func deathCountStage() {
-	if deathCount == 9 {
-		fmt.Printf("      \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("       \n")
-		fmt.Printf("========\n")
+func deathCountStage(death int) {
+
+	file, err := os.Open("hangman.txt")
+	if err != nil {
+		log.Fatalf("Error when opening file: %s", err)
 	}
-	if deathCount == 8 {
-		fmt.Printf("      \n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	fileScanner := bufio.NewScanner(file)
+	index := 0
+
+	var start int
+	var end int
+
+	if death == 9 {
+		start = 0
+		end = 7
 	}
-	if deathCount == 7 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 8 {
+		start = 8
+		end = 15
 	}
-	if deathCount == 6 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 7 {
+		start = 16
+		end = 23
 	}
-	if deathCount == 5 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 6 {
+		start = 24
+		end = 31
 	}
-	if deathCount == 4 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 5 {
+		start = 32
+		end = 39
 	}
-	if deathCount == 3 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf(" /|   |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 4 {
+		start = 40
+		end = 47
 	}
-	if deathCount == 2 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf(" /|/  |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 3 {
+		start = 48
+		end = 55
 	}
-	if deathCount == 1 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf(" /|/ |\n")
-		fmt.Printf(" /   |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 2 {
+		start = 56
+		end = 63
 	}
-	if deathCount == 0 {
-		fmt.Printf("  +---+\n")
-		fmt.Printf("  |   |\n")
-		fmt.Printf("  O   |\n")
-		fmt.Printf(" /|/  |\n")
-		fmt.Printf(" / /  |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("      |\n")
-		fmt.Printf("========\n")
+	if death == 1 {
+		start = 64
+		end = 71
 	}
+	if death == 0 {
+		start = 72
+		end = 79
+	}
+	for fileScanner.Scan() {
+		if index >= start && index <= end {
+			println(fileScanner.Text())
+		}
+		index++
+	}
+
 }
 
 // Compte le nombre de tour
@@ -314,7 +263,6 @@ func countPrint() {
 func Retry() {
 	count = 0
 	deathCount = 10
-	displayLoseMessage()
 	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
