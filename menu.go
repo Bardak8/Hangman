@@ -18,6 +18,7 @@ var count int = 0
 var wordhidden string
 var word string
 var guessedletter []string
+var guessedletter1 []string
 
 func Clear() {
 	os.Stdout.WriteString("\x1b[3;J\x1b[H\x1b[2J")
@@ -66,11 +67,11 @@ func debut() {
 	o := scanner.Text()
 	switch o {
 	case "1":
-		startGame("words.txt", 37)
+		startGame("./fichiertxt/words.txt", 37)
 	case "2":
-		startGame("words2.txt", 23)
+		startGame("./fichiertxt/words2.txt", 23)
 	case "3":
-		startGame("words3.txt", 24)
+		startGame("./fichiertxt/words3.txt", 24)
 	}
 }
 
@@ -94,14 +95,13 @@ func Readword(filename string, nbword int) string {
 	// Create a new Scanner for the file.
 	scanner := bufio.NewScanner(f)
 	// Loop over all lines in the file and print them.
-	index := 1
+	index := 0
 	for scanner.Scan() {
 		line := scanner.Text()
-		index++
 		if index == randnumber {
-			println(line)
 			return line
 		}
+		index++
 	}
 	return ""
 }
@@ -181,9 +181,10 @@ func testmot() bool {
 		} else if (len(lettreoumot) == len(word)) && wordhidden == word {
 			return true
 		} else {
-			fmt.Println("Vous n'avez pas trouvé le bon mot")
 			deathCount -= 2
 			deathCountStage(deathCount)
+			fmt.Println("Vous n'avez pas trouvé le bon mot")
+			fmt.Println("Il vous reste", deathCount, "essais")
 		}
 	}
 	return false
@@ -191,7 +192,7 @@ func testmot() bool {
 
 func deathCountStage(death int) {
 
-	file, err := os.Open("hangman.txt")
+	file, err := os.Open("./fichiertxt/hangman.txt")
 	if err != nil {
 		log.Fatalf("Error when opening file: %s", err)
 	}
@@ -263,6 +264,7 @@ func countPrint() {
 func Retry() {
 	count = 0
 	deathCount = 10
+	guessedletter = guessedletter1
 	SlowPrint("Voulez vous recommencer? \n")
 	fmt.Println("1 = Oui")
 	fmt.Println("2 = Non")
@@ -276,6 +278,7 @@ func Retry() {
 	switch o {
 	case "1":
 		Clear()
+		guessedletter = guessedletter1
 		debut()
 	case "2":
 		os.Exit(2)
