@@ -5,11 +5,9 @@ import (
 	"fmt"
 	"log"
 	"math/rand"
+	"os"
 	"regexp"
 	"strings"
-
-	// "math/rand"
-	"os"
 	"time"
 )
 
@@ -28,13 +26,14 @@ func SlowPrint(str ...string) {
 	for _, strpart := range str {
 		for _, char := range strpart {
 			fmt.Print(string(char))
+		
 			time.Sleep(40_000_000 * time.Nanosecond)
 		}
 	}
 }
 
 func start() {
-	SlowPrint("Bonjour et bienvenue dans le jeu du pendu\n")
+	fmt.Print("Bonjour et bienvenue dans le jeu du pendu\n")
 	fmt.Println("1 = Démarrer l'éxécution")
 	fmt.Println("2 = Non, je ne souhaite tuer personne")
 	// créer une var scanner qui va lire ce que l'utilisateur va écrire
@@ -54,7 +53,7 @@ func start() {
 }
 
 func debut() {
-	SlowPrint("Quelle bibliothèque de mot souhaitez vous choisir ? \n")
+	fmt.Println("Quelle bibliothèque de mot souhaitez vous choisir ? ")
 	fmt.Println("1 = Choisir la premiere version")
 	fmt.Println("2 = Choisir la deuxieme version")
 	fmt.Println("3 = Choisir la troisieme version")
@@ -67,19 +66,22 @@ func debut() {
 	o := scanner.Text()
 	switch o {
 	case "1":
-		startGame("./fichiertxt/words.txt", 37)
+		startGame("./fichiertxt/words.txt")
 	case "2":
-		startGame("./fichiertxt/words2.txt", 23)
+		startGame("./fichiertxt/words2.txt")
 	case "3":
-		startGame("./fichiertxt/words3.txt", 24)
+		startGame("./fichiertxt/words3.txt")
 	}
 }
 
-func startGame(filename string, nbword int) {
-	word = Readword(filename, nbword)
+func startGame(filename string) {
+	tw := Readword(filename)
+	word = tw[rand.Intn(len(tw))]
+
 	wordhidden = wordToUnderscore()
-	fmt.Println(wordhidden)
+
 	for {
+		fmt.Println(wordhidden)
 		if testmot() || !Contains(wordhidden, '_') {
 			displayWinMessage()
 			Retry()
@@ -87,12 +89,22 @@ func startGame(filename string, nbword int) {
 	}
 	// trouve le mot et transforme le mot choisi en underscore
 }
-func Readword(filename string) string {
-	file, err := os.Open(filename)
+func Readword(filename string) []string {
+	file, err := os.ReadFile(filename)
 	if err != nil {
 		log.Fatalf("Error when opening file: %s", err)
 	}
-	for  
+	word1 := ""
+	var todowordos []string
+	for _, char := range string(file) {
+		if char == '\n' {
+			todowordos = append(todowordos, word1)
+			word1 = ""
+		} else {
+			word1 += string(char)
+		}
+	}
+	return todowordos
 }
 
 func wordToUnderscore() string {
